@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import ReactHover from '..'
 import HoverComponent from './HoverComponent'
 import TriggerComponent from './TriggerComponent'
+import cssStyles from './Example.css';
 
 const optionsCursorTrueWithMargin = {
   followCursor: true,
@@ -13,11 +14,41 @@ const optionsCursorTrueWithMargin = {
 class App extends Component {
 
   render () {
+
+     if (!document.getElementsByTagName('head')[0].querySelector('style[id="react-hover-example"]')) {
+      // insert the style into the head
+      let tag = document.createElement('style')
+      tag.id = 'react-hover-example'
+      tag.innerHTML = cssStyles
+      document.getElementsByTagName('head')[0].appendChild(tag)
+    }
+
     return (
       <div>
-        <h3> There are two ways that you can use this library in Version 2</h3>
-        <p style={{margin: '0 auto'}}> 1. Use custom components as trigger and hover </p>
-        <pre style={{margin: '0 auto'}}>{`
+        <section className='react-hover-example'>
+          <h4 className='title'>React Hover</h4>
+          <div className='demonstration'>
+            <ReactHover
+              options={optionsCursorTrueWithMargin}>
+              <ReactHover.Trigger>
+                ◕‿‿◕
+              </ReactHover.Trigger>
+              <ReactHover.Hover>
+                <span>Hello<br />multiline<br />tooltip</span>
+              </ReactHover.Hover>
+            </ReactHover>
+          </div>
+          <pre style={{margin: '0 auto'}}>{`
+            <ReactHover
+              options={optionsCursorTrueWithMargin}>
+              <ReactHover.Trigger>
+                <TriggerComponent />
+              </ReactHover.Trigger>
+              <ReactHover.Hover>
+                <HoverComponent />
+              </ReactHover.Hover>
+              </ReactHover>`}
+          </pre>
           <ReactHover
             options={optionsCursorTrueWithMargin}>
             <ReactHover.Trigger>
@@ -26,17 +57,8 @@ class App extends Component {
             <ReactHover.Hover>
               <HoverComponent />
             </ReactHover.Hover>
-            </ReactHover>`}
-        </pre>
-        <ReactHover
-          options={optionsCursorTrueWithMargin}>
-          <ReactHover.Trigger>
-            <TriggerComponent />
-          </ReactHover.Trigger>
-          <ReactHover.Hover>
-            <HoverComponent />
-          </ReactHover.Hover>
-        </ReactHover>
+          </ReactHover>
+        </section>
 
         <p style={{margin: '0 auto'}}> 2. Use HTML as trigger and hover </p>
         <pre style={{margin: '0 auto'}}>{`
